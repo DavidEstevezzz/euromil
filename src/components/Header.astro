@@ -1,15 +1,16 @@
 ---
 const enlaces = [
-  { href: '#nosotros', texto: 'La residencia' },
-  { href: '#servicios', texto: 'Servicios' },
-  { href: '#opiniones', texto: 'Opiniones' },
-  { href: '#faq', texto: 'Preguntas' },
-  { href: '#contacto', texto: 'Contacto' },
+  { href: '/#nosotros', texto: 'La residencia' },
+  { href: '/#servicios', texto: 'Servicios' },
+  { href: '/#opiniones', texto: 'Opiniones' },
+  { href: '/#faq', texto: 'Preguntas' },
+  { href: '/#contacto', texto: 'Contacto' },
+  { href: '/consulta', texto: 'Mi reserva' },
 ];
 ---
 <header class="sticky top-0 z-50 bg-crema/90 backdrop-blur border-b border-carbon/10">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-    <a href="#top" class="font-display text-xl font-bold text-terracota">
+    <a href="/#top" class="font-display text-xl font-bold text-terracota">
       🐾 Euromil
     </a>
 
@@ -24,7 +25,7 @@ const enlaces = [
   ))}
 
   <a
-    href="#reservar"
+    href="/#reservar"
     class="rounded-full bg-ocre px-5 py-2 text-sm font-semibold text-carbon shadow-sm transition hover:brightness-105"
   >
     Reservar
@@ -59,7 +60,7 @@ const enlaces = [
   ))}
 
   <a
-    href="#reservar"
+    href="/#reservar"
     data-link-movil
     class="mt-2 block rounded-full bg-ocre px-5 py-3 text-center text-sm font-semibold text-carbon"
   >

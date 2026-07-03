@@ -1,0 +1,232 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+<Layout
+  title="Consulta de reserva - Residencia Canina Euromil"
+  description="Consulta el estado de tu solicitud de reserva en Residencia Canina Euromil."
+>
+  <header class="border-b border-carbon/10 bg-crema/90 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
+      <a href="/" class="font-display text-xl font-bold text-terracota">Euromil</a>
+      <nav class="flex items-center gap-3">
+        <a href="/#reservar" class="hidden text-sm font-medium text-carbon/70 transition hover:text-terracota sm:inline">
+          Reservar
+        </a>
+        <a
+          href="tel:697681869"
+          class="rounded-full bg-ocre px-5 py-2 text-sm font-semibold text-carbon shadow-sm transition hover:brightness-105"
+        >
+          Llamar
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="bg-crema">
+    <section class="mx-auto grid min-h-[calc(100vh-240px)] max-w-6xl items-start gap-8 px-4 py-12 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:py-20">
+      <div>
+        <p class="mb-2 text-sm font-semibold uppercase tracking-widest text-terracota">Mi reserva</p>
+        <h1 class="font-display text-4xl font-bold leading-tight md:text-5xl">
+          Consulta el estado de tu solicitud
+        </h1>
+        <p class="mt-5 max-w-xl text-carbon/75">
+          Introduce el codigo que recibiste al enviar el formulario. Si no lo tienes, llamanos y lo revisamos contigo.
+        </p>
+      </div>
+
+      <div class="rounded-2xl bg-white p-6 shadow-lg md:p-8">
+        <form id="form-consulta" class="space-y-4">
+          <div>
+            <label for="codigo" class="mb-1.5 block text-sm font-semibold">Codigo de reserva</label>
+            <input
+              id="codigo"
+              name="codigo"
+              type="text"
+              required
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="EU-0000-0000-0000-0000-0000-0000"
+              class="w-full rounded-xl border border-carbon/15 bg-crema px-4 py-3 text-sm font-semibold uppercase tracking-wide outline-none transition focus:border-terracota focus:ring-2 focus:ring-terracota/30"
+            />
+          </div>
+          <button
+            id="btn-consulta"
+            type="submit"
+            class="w-full rounded-full bg-terracota px-6 py-3 font-semibold text-crema shadow-md transition hover:brightness-110 disabled:opacity-60"
+          >
+            Consultar estado
+          </button>
+        </form>
+
+        <p id="consulta-error" class="mt-5 hidden rounded-xl bg-terracota/10 p-4 text-sm font-medium text-terracota"></p>
+
+        <article id="resultado-reserva" class="mt-6 hidden border-t border-carbon/10 pt-6">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-widest text-carbon/50">Estado</p>
+              <h2 id="res-perro" class="mt-1 font-display text-2xl font-bold"></h2>
+            </div>
+            <span id="res-estado" class="rounded-full px-4 py-2 text-sm font-bold"></span>
+          </div>
+
+          <p id="res-mensaje" class="mt-5 rounded-xl p-4 text-sm font-medium"></p>
+
+          <dl class="mt-6 grid gap-4 sm:grid-cols-2">
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-widest text-carbon/45">Entrada</dt>
+              <dd id="res-entrada" class="mt-1 font-medium"></dd>
+            </div>
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-widest text-carbon/45">Salida</dt>
+              <dd id="res-salida" class="mt-1 font-medium"></dd>
+            </div>
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-widest text-carbon/45">Servicio</dt>
+              <dd id="res-servicio" class="mt-1 font-medium"></dd>
+            </div>
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-widest text-carbon/45">Cartilla</dt>
+              <dd id="res-vacunas" class="mt-1 font-medium"></dd>
+            </div>
+          </dl>
+
+          <div class="mt-6 rounded-xl bg-crema p-4">
+            <p class="text-sm text-carbon/75">
+              Para cambiar fechas, anular la solicitud o resolver cualquier duda, llamanos al
+              <a href="tel:697681869" class="font-semibold text-terracota">697 68 18 69</a>.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  import { consultarReservaCliente } from '../lib/reservas';
+
+  const form = document.getElementById('form-consulta');
+  const inputCodigo = document.getElementById('codigo');
+  const btn = document.getElementById('btn-consulta');
+  const errorBox = document.getElementById('consulta-error');
+  const resultado = document.getElementById('resultado-reserva');
+
+  const campos = {
+    perro: document.getElementById('res-perro'),
+    estado: document.getElementById('res-estado'),
+    mensaje: document.getElementById('res-mensaje'),
+    entrada: document.getElementById('res-entrada'),
+    salida: document.getElementById('res-salida'),
+    servicio: document.getElementById('res-servicio'),
+    vacunas: document.getElementById('res-vacunas'),
+  };
+
+  const servicios = {
+    estancia: 'Estancia canina',
+    pension: 'Pension',
+    guarderia: 'Hotel 24h / Guarderia',
+  };
+
+  const estados = {
+    pendiente: {
+      texto: 'Pendiente',
+      badge: 'bg-ocre/25 text-carbon',
+      mensaje: 'Hemos recibido tu solicitud. Te llamaremos para confirmar disponibilidad y cerrar la reserva.',
+      mensajeClase: 'bg-ocre/15 text-carbon',
+    },
+    confirmada: {
+      texto: 'Confirmada',
+      badge: 'bg-salvia/20 text-salvia',
+      mensaje: 'Tu reserva esta confirmada. Recuerda traer la cartilla de vacunacion el dia de entrada.',
+      mensajeClase: 'bg-salvia/15 text-salvia',
+    },
+    rechazada: {
+      texto: 'No disponible',
+      badge: 'bg-terracota/15 text-terracota',
+      mensaje: 'No hemos podido confirmar esta solicitud. Llamanos y buscamos otra fecha o alternativa.',
+      mensajeClase: 'bg-terracota/10 text-terracota',
+    },
+  };
+
+  function normalizarCodigo(codigo) {
+    return String(codigo || '').trim().toUpperCase();
+  }
+
+  function formatearFecha(fecha, hora) {
+    if (!fecha) return '';
+    const texto = new Date(`${fecha}T00:00:00`).toLocaleDateString('es-ES', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+    return `${texto}${hora ? `, ${hora}` : ''}`;
+  }
+
+  function mostrarError(mensaje) {
+    resultado.classList.add('hidden');
+    errorBox.textContent = mensaje;
+    errorBox.classList.remove('hidden');
+  }
+
+  function pintarReserva(reserva) {
+    const estado = estados[reserva.estado] || estados.pendiente;
+    errorBox.classList.add('hidden');
+
+    campos.perro.textContent = reserva.raza
+      ? `${reserva.perro} - ${reserva.raza}`
+      : reserva.perro;
+    campos.estado.textContent = estado.texto;
+    campos.estado.className = `rounded-full px-4 py-2 text-sm font-bold ${estado.badge}`;
+    campos.mensaje.textContent = estado.mensaje;
+    campos.mensaje.className = `mt-5 rounded-xl p-4 text-sm font-medium ${estado.mensajeClase}`;
+    campos.entrada.textContent = formatearFecha(reserva.entrada, reserva.hora_entrada);
+    campos.salida.textContent = formatearFecha(reserva.salida, reserva.hora_salida);
+    campos.servicio.textContent = servicios[reserva.servicio] || reserva.servicio;
+    campos.vacunas.textContent = reserva.vacunas ? 'Confirmada' : 'Pendiente de comprobar';
+
+    resultado.classList.remove('hidden');
+    resultado.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  async function consultar(codigo) {
+    btn.disabled = true;
+    btn.textContent = 'Consultando...';
+
+    const res = await consultarReservaCliente(codigo);
+
+    btn.disabled = false;
+    btn.textContent = 'Consultar estado';
+
+    if (!res.ok) {
+      mostrarError('No se pudo consultar la reserva. Intentalo de nuevo en unos segundos.');
+      return;
+    }
+
+    if (!res.data) {
+      mostrarError('No encontramos ninguna reserva con ese codigo.');
+      return;
+    }
+
+    pintarReserva(res.data);
+  }
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const codigo = normalizarCodigo(inputCodigo.value);
+    inputCodigo.value = codigo;
+    consultar(codigo);
+  });
+
+  const codigoUrl = new URLSearchParams(window.location.search).get('codigo');
+  const ultimoCodigo = localStorage.getItem('euromil_ultimo_codigo_reserva');
+  const codigoInicial = normalizarCodigo(codigoUrl || ultimoCodigo);
+
+  if (codigoInicial) {
+    inputCodigo.value = codigoInicial;
+    consultar(codigoInicial);
+  }
+</script>

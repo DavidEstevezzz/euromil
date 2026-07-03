@@ -3,6 +3,19 @@ import { reservasSeed } from './mockData';
 
 const CLAVE = 'euromil_reservas';
 
+function normalizarCodigoReserva(codigo) {
+  return String(codigo || '').trim().toUpperCase();
+}
+
+function generarCodigoReserva() {
+  const bytes = new Uint8Array(12);
+  crypto.getRandomValues(bytes);
+  const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, '0'))
+    .join('')
+    .toUpperCase();
+  return `EU-${hex.match(/.{1,4}/g).join('-')}`;
+}
+
 function leerLocal() {
   const guardadas = JSON.parse(localStorage.getItem(CLAVE) || '[]');
   return [...reservasSeed, ...guardadas];
@@ -15,8 +28,10 @@ function guardarLocal(reserva) {
 }
 
 export async function crearReserva(datos) {
+  const clienteToken = generarCodigoReserva();
   const reserva = {
     ...datos,
+    cliente_token: clienteToken,
     estado: 'pendiente',
     creada: new Date().toISOString(),
   };
@@ -24,12 +39,13 @@ export async function crearReserva(datos) {
   if (MOCK_MODE) {
     await new Promise((r) => setTimeout(r, 600)); // simula red
     guardarLocal({ ...reserva, id: 'web-' + Date.now() });
-    return { ok: true };
+    return { ok: true, codigo: clienteToken };
   }
 
   const { supabase } = await import('./supabase');
   const { error } = await supabase.from('reservas').insert(reserva);
-  return { ok: !error, error };
+  if (error) console.error('Error creando reserva en Supabase:', error);
+  return { ok: !error, error, codigo: error ? null : clienteToken };
 }
 
 export async function listarReservas() {
@@ -61,6 +77,7 @@ export async function cambiarEstado(id, estado) {
   }
   const { supabase } = await import('./supabase');
   const { error } = await supabase.from('reservas').update({ estado }).eq('id', id);
+  if (error) console.error('Error cambiando estado de reserva en Supabase:', error);
   return { ok: !error, error };
 }
 
@@ -71,7 +88,7 @@ export function aplicarOverrides(reservas) {
 }
 
 export async function crearReservaManual(datos) {
-  const reserva = { ...datos, creada: new Date().toISOString() };
+  const reserva = { ...datos, cliente_token: generarCodigoReserva(), creada: new Date().toISOString() };
 
   if (MOCK_MODE) {
     guardarLocal({ ...reserva, id: 'manual-' + Date.now() });
@@ -79,5 +96,27 @@ export async function crearReservaManual(datos) {
   }
   const { supabase } = await import('./supabase');
   const { error } = await supabase.from('reservas').insert(reserva);
+  if (error) console.error('Error creando reserva manual en Supabase:', error);
   return { ok: !error, error };
+}
+
+export async function consultarReservaCliente(codigo) {
+  const codigoNormalizado = normalizarCodigoReserva(codigo);
+
+  if (!codigoNormalizado) {
+    return { ok: false, data: null, error: 'codigo_vacio' };
+  }
+
+  if (MOCK_MODE) {
+    const reserva = leerLocal().find((r) => normalizarCodigoReserva(r.cliente_token) === codigoNormalizado);
+    return { ok: true, data: reserva || null };
+  }
+
+  const { supabase } = await import('./supabase');
+  const { data, error } = await supabase.rpc('consultar_reserva_cliente', {
+    codigo_reserva: codigoNormalizado,
+  });
+
+  if (error) console.error('Error consultando reserva en Supabase:', error);
+  return { ok: !error, data: data?.[0] || null, error };
 }

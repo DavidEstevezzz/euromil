@@ -116,6 +116,29 @@ const claseInput =
         Te llamaremos muy pronto para confirmar la estancia.
         Si tienes prisa, llámanos al <a href="tel:697681869" class="font-semibold text-terracota">697 68 18 69</a>.
       </p>
+      <div id="bloque-codigo-reserva" class="mt-6 hidden rounded-xl bg-crema p-5 text-left">
+        <p class="text-sm font-semibold text-carbon">Codigo de reserva</p>
+        <p class="mt-1 text-sm text-carbon/70">
+          Guardalo para consultar el estado de la solicitud cuando quieras.
+        </p>
+        <div class="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <code id="codigo-reserva" class="rounded-lg bg-white px-4 py-3 text-center text-sm font-bold tracking-wide text-terracota sm:flex-1"></code>
+          <button
+            id="btn-copiar-codigo"
+            type="button"
+            class="rounded-full border border-terracota px-5 py-2.5 text-sm font-semibold text-terracota transition hover:bg-terracota hover:text-crema"
+          >
+            Copiar
+          </button>
+        </div>
+        <a
+          id="link-consultar-reserva"
+          href="/consulta"
+          class="mt-4 block rounded-full bg-ocre px-5 py-3 text-center text-sm font-semibold text-carbon transition hover:brightness-105"
+        >
+          Ver estado de mi reserva
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -128,6 +151,10 @@ const claseInput =
   const ok = document.getElementById('reserva-ok');
   const errorBox = document.getElementById('error-form');
   const btn = document.getElementById('btn-enviar');
+  const bloqueCodigo = document.getElementById('bloque-codigo-reserva');
+  const codigoReserva = document.getElementById('codigo-reserva');
+  const linkConsultar = document.getElementById('link-consultar-reserva');
+  const btnCopiarCodigo = document.getElementById('btn-copiar-codigo');
 
   const hoy = new Date().toISOString().split('T')[0];
   const inputEntrada = document.getElementById('entrada');
@@ -198,6 +225,13 @@ const claseInput =
     const res = await crearReserva(datos);
 
     if (res.ok) {
+      if (res.codigo && bloqueCodigo && codigoReserva && linkConsultar) {
+        codigoReserva.textContent = res.codigo;
+        linkConsultar.href = `/consulta?codigo=${encodeURIComponent(res.codigo)}`;
+        bloqueCodigo.classList.remove('hidden');
+        localStorage.setItem('euromil_ultimo_codigo_reserva', res.codigo);
+      }
+
       form.classList.add('hidden');
       ok.classList.remove('hidden');
       ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -207,4 +241,16 @@ const claseInput =
       mostrarError('No se pudo enviar la reserva. Inténtalo de nuevo o llámanos al 697 68 18 69.');
     }
   });
+
+  if (btnCopiarCodigo && codigoReserva) {
+    btnCopiarCodigo.addEventListener('click', async () => {
+      const codigo = codigoReserva.textContent;
+      if (!codigo) return;
+      await navigator.clipboard.writeText(codigo);
+      btnCopiarCodigo.textContent = 'Copiado';
+      setTimeout(() => {
+        btnCopiarCodigo.textContent = 'Copiar';
+      }, 1600);
+    });
+  }
 </script>
