@@ -1,0 +1,12 @@
+---
+interface Props {
+  color?: string; // clase de fill de Tailwind
+  flip?: boolean;
+}
+const { color = 'fill-salvia/10', flip = false } = Astro.props;
+---
+<div class={`w-full overflow-hidden leading-none ${flip ? 'rotate-180' : ''}`} aria-hidden="true">
+  <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class={`h-12 w-full md:h-20 ${color}`}>
+    <path d="M0,60 C240,10 420,95 720,55 C1020,15 1200,80 1440,40 L1440,90 L0,90 Z" />
+  </svg>
+</div>

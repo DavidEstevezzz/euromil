@@ -1,0 +1,99 @@
+---
+const enlaces = [
+  { href: '#nosotros', texto: 'La residencia' },
+  { href: '#servicios', texto: 'Servicios' },
+  { href: '#opiniones', texto: 'Opiniones' },
+  { href: '#faq', texto: 'Preguntas' },
+  { href: '#contacto', texto: 'Contacto' },
+];
+---
+<header class="sticky top-0 z-50 bg-crema/90 backdrop-blur border-b border-carbon/10">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <a href="#top" class="font-display text-xl font-bold text-terracota">
+      🐾 Euromil
+    </a>
+
+    <nav class="hidden items-center gap-6 md:flex">
+  {enlaces.map((e) => (
+    <a
+      href={e.href}
+      class="text-sm font-medium text-carbon/80 transition hover:text-terracota"
+    >
+      {e.texto}
+    </a>
+  ))}
+
+  <a
+    href="#reservar"
+    class="rounded-full bg-ocre px-5 py-2 text-sm font-semibold text-carbon shadow-sm transition hover:brightness-105"
+  >
+    Reservar
+  </a>
+</nav>
+
+    <button
+      id="btn-menu"
+      class="md:hidden p-2 text-carbon"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+    >
+      <svg id="icono-abrir" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <svg id="icono-cerrar" xmlns="http://www.w3.org/2000/svg" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Menú móvil -->
+<nav id="menu-movil" class="hidden border-t border-carbon/10 bg-crema px-4 pb-4 md:hidden">
+  {enlaces.map((e) => (
+    <a
+      href={e.href}
+      class="block py-3 text-sm font-medium text-carbon/80"
+      data-link-movil
+    >
+      {e.texto}
+    </a>
+  ))}
+
+  <a
+    href="#reservar"
+    data-link-movil
+    class="mt-2 block rounded-full bg-ocre px-5 py-3 text-center text-sm font-semibold text-carbon"
+  >
+    Reserva la estancia de tu perro
+  </a>
+</nav>
+</header>
+<script>
+  const btn = document.getElementById('btn-menu');
+  const menu = document.getElementById('menu-movil');
+  const abrir = document.getElementById('icono-abrir');
+  const cerrar = document.getElementById('icono-cerrar');
+
+  function toggleMenu(forzarCerrar) {
+    if (!btn || !menu || !abrir || !cerrar) return;
+
+    const estaAbierto = !menu.classList.contains('hidden');
+    const debeCerrar = forzarCerrar === true ? true : estaAbierto;
+
+    menu.classList.toggle('hidden', debeCerrar);
+    abrir.classList.toggle('hidden', !debeCerrar);
+    cerrar.classList.toggle('hidden', debeCerrar);
+    btn.setAttribute('aria-expanded', String(!debeCerrar));
+  }
+
+  if (btn) {
+    btn.addEventListener('click', function () {
+      toggleMenu(false);
+    });
+  }
+
+  document.querySelectorAll('[data-link-movil]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      toggleMenu(true);
+    });
+  });
+</script>

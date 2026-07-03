@@ -1,0 +1,52 @@
+---
+// ⚠️ Testimonios de EJEMPLO para la demo. Sustituir por reseñas reales
+// de la ficha de Google (con permiso o citando "Reseña de Google").
+const testimonios = [
+  {
+    nombre: 'María J.',
+    perro: 'Trufa, bodeguero',
+    texto: 'Era la primera vez que dejábamos a Trufa y estábamos muertos de miedo. Andrés nos mandó fotos durante la semana y la recogimos feliz y tranquila. Las instalaciones, limpísimas y muy amplias.',
+  },
+  {
+    nombre: 'Francisco R.',
+    perro: 'Rocco, pastor alemán',
+    texto: 'Rocco es grande y nervioso y en otras residencias lo pasaba mal. Aquí, con el campo alrededor y sus paseos, viene otro perro. Se nota que Andrés trata a cada uno según su carácter.',
+  },
+  {
+    nombre: 'Carmen L.',
+    perro: 'Nala, mestiza',
+    texto: 'Lo que más me gustó es la tranquilidad del sitio: nada de ladridos histéricos ni jaulas apretadas. Nala volvió a casa relajada y hasta con mejor comportamiento. Repetiremos en verano seguro.',
+  },
+  {
+    nombre: 'Javier M.',
+    perro: 'Coco, caniche',
+    texto: 'Trato cercano de verdad. Le expliqué a Andrés la medicación de Coco y se la dio a sus horas sin problema. Da mucha confianza dejar al perro con alguien que se nota que quiere a los animales.',
+  },
+];
+---
+<section id="opiniones" class="mx-auto max-w-6xl px-4 py-20 md:py-28">
+  <div class="mx-auto max-w-2xl text-center">
+    <p class="mb-2 text-sm font-semibold uppercase tracking-widest text-terracota">Opiniones</p>
+    <h2 class="font-display text-3xl font-bold md:text-4xl">
+      Lo que cuentan las familias que ya nos conocen
+    </h2>
+    <p class="mt-4 text-carbon/70">
+      Valoración media de <strong>5,0</strong> con cerca de 90 reseñas en Google.
+    </p>
+  </div>
+
+  <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    {testimonios.map((t) => (
+      <figure class="flex flex-col rounded-2xl border border-carbon/10 bg-white p-6">
+        <p class="text-ocre" aria-label="5 estrellas">★★★★★</p>
+        <blockquote class="mt-3 flex-1 text-sm leading-relaxed text-carbon/80">
+          «{t.texto}»
+        </blockquote>
+        <figcaption class="mt-4 border-t border-carbon/10 pt-3">
+          <p class="text-sm font-semibold">{t.nombre}</p>
+          <p class="text-xs text-carbon/50">{t.perro}</p>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+</section>

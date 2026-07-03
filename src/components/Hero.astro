@@ -1,0 +1,46 @@
+---
+// Placeholder: placedog.net sirve fotos reales de perros para la demo.
+// Sustituir por fotos reales de las instalaciones cuando el cliente las pase.
+const fotoHero = 'https://placedog.net/900/1000?id=115';
+---
+<section id="top" class="relative overflow-hidden">
+  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-20 pt-12 md:grid-cols-2 md:pb-28 md:pt-20">
+    <div>
+      <p class="mb-3 inline-block rounded-full bg-salvia/15 px-4 py-1 text-sm font-medium text-salvia">
+        Cogollos de la Vega · a 15 min de Granada
+      </p>
+      <h1 class="font-display text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
+        Tu perro, de vacaciones <span class="text-terracota">en el campo</span>
+      </h1>
+      <p class="mt-5 max-w-md text-lg text-carbon/75">
+        Nada de jaulas en un polígono. En Euromil tu perro pasa los días en un
+        entorno rural tranquilo, con espacio para correr y el trato cercano de
+        Andrés, que conoce a cada huésped por su nombre.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a
+          href="#reservar"
+          class="rounded-full bg-ocre px-7 py-3.5 text-center font-semibold text-carbon shadow-md transition hover:brightness-105"
+        >
+          Reserva la estancia de tu perro
+        </a>
+        <a
+          href="tel:697681869"
+          class="rounded-full border-2 border-terracota px-7 py-3 text-center font-semibold text-terracota transition hover:bg-terracota hover:text-crema"
+        >
+          📞 697 68 18 69
+        </a>
+      </div>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-sm md:max-w-none">
+      <div class="absolute -inset-4 rounded-blob bg-salvia/20"></div>
+      <img
+        src={fotoHero}
+        alt="Perro feliz corriendo en el campo en la Residencia Canina Euromil"
+        class="relative rounded-blob object-cover shadow-xl aspect-[4/5] w-full"
+        loading="eager"
+      />
+    </div>
+  </div>
+</section>

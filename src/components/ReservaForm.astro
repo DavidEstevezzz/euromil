@@ -1,0 +1,210 @@
+---
+const servicios = [
+  { valor: 'estancia', texto: 'Estancia canina (por días)' },
+  { valor: 'pension', texto: 'Pensión (larga estancia)' },
+  { valor: 'guarderia', texto: 'Hotel 24h / Guardería' },
+];
+const claseInput =
+  'w-full rounded-xl border border-carbon/15 bg-crema px-4 py-2.5 text-sm outline-none transition focus:border-terracota focus:ring-2 focus:ring-terracota/30';
+---
+<section id="reservar" class="bg-terracota py-20 md:py-28">
+  <div class="mx-auto max-w-3xl px-4">
+    <div class="text-center text-crema">
+      <h2 class="font-display text-3xl font-bold md:text-4xl">
+        Reserva la estancia de tu perro
+      </h2>
+      <p class="mt-3 text-crema/85">
+        Rellena el formulario y te llamamos para confirmar la reserva.
+        Sin pagos por adelantado.
+      </p>
+    </div>
+
+    <form id="form-reserva" class="mt-10 space-y-5 rounded-2xl bg-white p-6 shadow-xl md:p-9" novalidate>
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label for="perro" class="mb-1.5 block text-sm font-semibold">Nombre del perro *</label>
+          <input id="perro" name="perro" type="text" required class={claseInput} placeholder="Luna" />
+        </div>
+        <div>
+          <label for="raza" class="mb-1.5 block text-sm font-semibold">Raza</label>
+          <input id="raza" name="raza" type="text" class={claseInput} placeholder="Border collie, mestizo…" />
+        </div>
+        <div>
+          <label for="tamano" class="mb-1.5 block text-sm font-semibold">Tamaño *</label>
+          <select id="tamano" name="tamano" required class={claseInput}>
+            <option value="">Elige…</option>
+            <option value="pequeno">Pequeño (hasta 10 kg)</option>
+            <option value="mediano">Mediano (10–25 kg)</option>
+            <option value="grande">Grande (más de 25 kg)</option>
+          </select>
+        </div>
+        <div>
+          <label for="servicio" class="mb-1.5 block text-sm font-semibold">Servicio *</label>
+          <select id="servicio" name="servicio" required class={claseInput}>
+            <option value="">Elige…</option>
+            {servicios.map((s) => <option value={s.valor}>{s.texto}</option>)}
+          </select>
+        </div>
+        <div>
+          <label for="dueno" class="mb-1.5 block text-sm font-semibold">Tu nombre *</label>
+          <input id="dueno" name="dueno" type="text" required class={claseInput} />
+        </div>
+        <div>
+          <label for="telefono" class="mb-1.5 block text-sm font-semibold">Teléfono *</label>
+          <input id="telefono" name="telefono" type="tel" required class={claseInput} placeholder="6XX XX XX XX" />
+        </div>
+        <div class="sm:col-span-2">
+          <label for="email" class="mb-1.5 block text-sm font-semibold">Email</label>
+          <input id="email" name="email" type="email" class={claseInput} placeholder="tucorreo@ejemplo.com" />
+        </div>
+
+        <div>
+          <label for="entrada" class="mb-1.5 block text-sm font-semibold">Fecha de entrada *</label>
+          <input id="entrada" name="entrada" type="date" required class={claseInput} />
+          <p id="aviso-entrada" class="mt-1 hidden text-xs font-medium text-terracota">
+            Los domingos estamos cerrados — elige otro día, por favor.
+          </p>
+        </div>
+        <div>
+          <label for="hora_entrada" class="mb-1.5 block text-sm font-semibold">Hora de entrega *</label>
+          <select id="hora_entrada" name="hora_entrada" required disabled class={claseInput}>
+            <option value="">Elige antes la fecha</option>
+          </select>
+        </div>
+        <div>
+          <label for="salida" class="mb-1.5 block text-sm font-semibold">Fecha de salida *</label>
+          <input id="salida" name="salida" type="date" required class={claseInput} />
+          <p id="aviso-salida" class="mt-1 hidden text-xs font-medium text-terracota">
+            Los domingos estamos cerrados — elige otro día, por favor.
+          </p>
+        </div>
+        <div>
+          <label for="hora_salida" class="mb-1.5 block text-sm font-semibold">Hora de recogida *</label>
+          <select id="hora_salida" name="hora_salida" required disabled class={claseInput}>
+            <option value="">Elige antes la fecha</option>
+          </select>
+        </div>
+      </div>
+
+      <label class="flex items-start gap-3 rounded-xl bg-salvia/10 p-4 text-sm">
+        <input id="vacunas" name="vacunas" type="checkbox" required class="mt-0.5 h-4 w-4 accent-salvia" />
+        <span>
+          Confirmo que la <strong>cartilla de vacunación está al día</strong>
+          (polivalente y antirrábica) y la presentaré el día de la entrada. *
+        </span>
+      </label>
+
+      <p id="error-form" class="hidden rounded-xl bg-terracota/10 p-4 text-sm font-medium text-terracota"></p>
+
+      <button
+        type="submit"
+        id="btn-enviar"
+        class="w-full rounded-full bg-ocre px-7 py-4 font-semibold text-carbon shadow-md transition hover:brightness-105 disabled:opacity-60"
+      >
+        Enviar solicitud de reserva
+      </button>
+      <p class="text-center text-xs text-carbon/50">
+        La reserva queda <strong>pendiente</strong> hasta que la confirmemos por teléfono.
+      </p>
+    </form>
+
+    <!-- Mensaje de éxito -->
+    <div id="reserva-ok" class="mt-10 hidden rounded-2xl bg-white p-9 text-center shadow-xl">
+      <p class="text-5xl">🐾</p>
+      <h3 class="mt-3 font-display text-2xl font-bold">¡Solicitud recibida!</h3>
+      <p class="mt-2 text-carbon/70">
+        Te llamaremos muy pronto para confirmar la estancia.
+        Si tienes prisa, llámanos al <a href="tel:697681869" class="font-semibold text-terracota">697 68 18 69</a>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { franjasParaFecha, esDomingo } from '../lib/horarios';
+  import { crearReserva } from '../lib/reservas';
+
+  const form = document.getElementById('form-reserva');
+  const ok = document.getElementById('reserva-ok');
+  const errorBox = document.getElementById('error-form');
+  const btn = document.getElementById('btn-enviar');
+
+  const hoy = new Date().toISOString().split('T')[0];
+  const inputEntrada = document.getElementById('entrada');
+  const inputSalida = document.getElementById('salida');
+  inputEntrada.min = hoy;
+  inputSalida.min = hoy;
+
+  function actualizarFranjas(inputFecha, selectHora, aviso) {
+    const fecha = inputFecha.value;
+    const franjas = franjasParaFecha(fecha);
+    const domingo = esDomingo(fecha);
+
+    aviso.classList.toggle('hidden', !domingo);
+    selectHora.innerHTML = '';
+    selectHora.disabled = franjas.length === 0;
+
+    if (franjas.length === 0) {
+      selectHora.innerHTML = `<option value="">${domingo ? 'Domingo: cerrado' : 'Elige antes la fecha'}</option>`;
+      return;
+    }
+    selectHora.innerHTML =
+      '<option value="">Elige hora…</option>' +
+      franjas.map((f) => `<option value="${f}">${f}</option>`).join('');
+  }
+
+  const horaEntrada = document.getElementById('hora_entrada');
+  const horaSalida = document.getElementById('hora_salida');
+  const avisoEntrada = document.getElementById('aviso-entrada');
+  const avisoSalida = document.getElementById('aviso-salida');
+
+  inputEntrada.addEventListener('change', () => {
+    actualizarFranjas(inputEntrada, horaEntrada, avisoEntrada);
+    if (inputEntrada.value) inputSalida.min = inputEntrada.value;
+  });
+  inputSalida.addEventListener('change', () =>
+    actualizarFranjas(inputSalida, horaSalida, avisoSalida)
+  );
+
+  function mostrarError(msg) {
+    errorBox.textContent = msg;
+    errorBox.classList.remove('hidden');
+    errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.classList.add('hidden');
+
+    if (!form.reportValidity()) return;
+
+    const datos = Object.fromEntries(new FormData(form).entries());
+    datos.vacunas = !!datos.vacunas;
+    datos.origen = 'web';
+
+    if (esDomingo(datos.entrada) || esDomingo(datos.salida)) {
+      return mostrarError('Los domingos la residencia está cerrada para entregas y recogidas.');
+    }
+    if (datos.salida < datos.entrada) {
+      return mostrarError('La fecha de salida no puede ser anterior a la de entrada.');
+    }
+    if (datos.entrada === datos.salida && datos.hora_salida <= datos.hora_entrada) {
+      return mostrarError('Para el mismo día, la hora de recogida debe ser posterior a la de entrega.');
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+
+    const res = await crearReserva(datos);
+
+    if (res.ok) {
+      form.classList.add('hidden');
+      ok.classList.remove('hidden');
+      ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Enviar solicitud de reserva';
+      mostrarError('No se pudo enviar la reserva. Inténtalo de nuevo o llámanos al 697 68 18 69.');
+    }
+  });
+</script>

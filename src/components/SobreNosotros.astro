@@ -1,0 +1,50 @@
+---
+// Sustituir por fotos reales de la ficha de Google Business:
+// guardarlas en public/images/ y cambiar los src por /images/galeria-1.jpg, etc.
+const galeria = [
+  { src: 'https://placedog.net/600/450?id=213', alt: 'Zona exterior de la residencia' },
+  { src: 'https://placedog.net/600/450?id=167', alt: 'Perro descansando en las instalaciones' },
+  { src: 'https://placedog.net/600/450?id=94',  alt: 'Perros jugando al aire libre' },
+  { src: 'https://placedog.net/600/450?id=188', alt: 'Interior limpio y amplio de los alojamientos' },
+];
+---
+<section id="nosotros" class="mx-auto max-w-6xl px-4 py-20 md:py-28">
+  <div class="grid items-center gap-12 md:grid-cols-2">
+    <div>
+      <p class="mb-2 text-sm font-semibold uppercase tracking-widest text-terracota">
+        La residencia
+      </p>
+      <h2 class="font-display text-3xl font-bold md:text-4xl">
+        Un sitio donde tu perro está a gusto de verdad
+      </h2>
+      <p class="mt-5 text-carbon/75">
+        Euromil está en el Camino de La Atalaya, en Cogollos de la Vega: campo,
+        silencio y aire de sierra a un cuarto de hora de Granada. Aquí los perros
+        no pasan el día encerrados en un box de un polígono industrial — tienen
+        espacio, rutina de paseos y compañía.
+      </p>
+      <p class="mt-4 text-carbon/75">
+        Andrés lleva la residencia personalmente. Conoce el carácter, las manías
+        y la comida de cada huésped, y si te quedas más tranquilo, te va contando
+        cómo lo lleva tu perro durante la estancia. Las instalaciones se limpian
+        a diario y cada perro tiene su zona amplia de descanso.
+      </p>
+      <ul class="mt-6 space-y-3 text-carbon/80">
+        <li class="flex gap-3"><span class="text-salvia">✔</span> Entorno rural tranquilo, sin ruido de tráfico</li>
+        <li class="flex gap-3"><span class="text-salvia">✔</span> Instalaciones limpias y amplias, higiene diaria</li>
+        <li class="flex gap-3"><span class="text-salvia">✔</span> Trato directo con Andrés, sin intermediarios</li>
+      </ul>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 md:gap-4">
+      {galeria.map((foto, i) => (
+        <img
+          src={foto.src}
+          alt={foto.alt}
+          loading="lazy"
+          class={`aspect-[4/3] w-full rounded-2xl object-cover shadow-md ${i % 2 === 1 ? 'mt-6' : ''}`}
+        />
+      ))}
+    </div>
+  </div>
+</section>

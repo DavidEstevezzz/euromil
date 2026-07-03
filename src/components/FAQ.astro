@@ -1,0 +1,44 @@
+---
+const faqs = [
+  {
+    p: '¿Qué vacunas necesita mi perro para la estancia?',
+    r: 'Cartilla de vacunación al día: vacuna polivalente y antirrábica en vigor, y desparasitación interna y externa reciente. Te pediremos la cartilla el día de la entrada — es por la seguridad de todos los huéspedes.',
+  },
+  {
+    p: '¿Cómo funciona la entrega y la recogida?',
+    r: 'Las entregas y recogidas se hacen dentro de nuestro horario: de lunes a jueves de 9:00 a 20:00, viernes de 10:00 a 21:00 y sábados de 10:30 a 14:00. Los domingos la residencia permanece cerrada para entradas y salidas, aunque los perros alojados están atendidos con normalidad.',
+  },
+  {
+    p: '¿Qué tengo que llevar el primer día?',
+    r: 'La cartilla de vacunación, su pienso habitual (los cambios bruscos de comida sientan mal), la correa y, si quieres, su manta o juguete favorito para que tenga un olor conocido. Si toma medicación, tráela con la pauta apuntada y nos encargamos.',
+  },
+  {
+    p: '¿Puedo visitar la residencia antes de reservar?',
+    r: 'Claro, de hecho lo recomendamos. Llámanos al 697 68 18 69 y quedamos dentro del horario de apertura para que conozcas las instalaciones y a Andrés, y veas dónde va a estar tu perro.',
+  },
+  {
+    p: '¿Mi perro estará con otros perros?',
+    r: 'Depende de su carácter. Los perros sociables disfrutan de ratos de juego en las zonas comunes; los que prefieren tranquilidad tienen su espacio propio. Lo hablamos contigo en la entrada y adaptamos la estancia a cada perro.',
+  },
+];
+---
+<section id="faq" class="bg-salvia/10 py-20 md:py-28">
+  <div class="mx-auto max-w-3xl px-4">
+    <div class="text-center">
+      <p class="mb-2 text-sm font-semibold uppercase tracking-widest text-terracota">Preguntas frecuentes</p>
+      <h2 class="font-display text-3xl font-bold md:text-4xl">Antes de traer a tu perro</h2>
+    </div>
+
+    <div class="mt-10 space-y-3">
+      {faqs.map((f) => (
+        <details class="group rounded-xl bg-white p-5 shadow-sm">
+          <summary class="flex cursor-pointer list-none items-center justify-between font-semibold [&::-webkit-details-marker]:hidden">
+            {f.p}
+            <span class="ml-4 text-terracota transition group-open:rotate-45">＋</span>
+          </summary>
+          <p class="mt-3 text-sm leading-relaxed text-carbon/75">{f.r}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

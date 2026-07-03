@@ -1,0 +1,50 @@
+---
+const horario = [
+  { dia: 'Lunes a jueves', horas: '9:00 – 20:00' },
+  { dia: 'Viernes', horas: '10:00 – 21:00' },
+  { dia: 'Sábado', horas: '10:30 – 14:00' },
+  { dia: 'Domingo', horas: 'Cerrado' },
+];
+---
+<section id="contacto" class="mx-auto max-w-6xl px-4 py-20 md:py-28">
+  <div class="grid gap-10 md:grid-cols-2">
+    <div>
+      <p class="mb-2 text-sm font-semibold uppercase tracking-widest text-terracota">Contacto</p>
+      <h2 class="font-display text-3xl font-bold md:text-4xl">Ven a conocernos</h2>
+      <p class="mt-4 text-carbon/70">
+        Camino de La Atalaya · 18211 Cogollos de la Vega, Granada
+      </p>
+
+      <a
+        href="tel:697681869"
+        class="mt-6 inline-block rounded-full bg-terracota px-7 py-3.5 font-semibold text-crema shadow-md transition hover:brightness-110"
+      >
+        📞 Llámanos: 697 68 18 69
+      </a>
+
+      <h3 class="mt-8 font-display text-lg font-bold">Horario de entregas y recogidas</h3>
+      <table class="mt-3 w-full max-w-sm text-sm">
+        <tbody>
+          {horario.map((h) => (
+            <tr class="border-b border-carbon/10">
+              <td class="py-2.5 font-medium">{h.dia}</td>
+              <td class={`py-2.5 text-right ${h.horas === 'Cerrado' ? 'text-terracota font-semibold' : 'text-carbon/70'}`}>
+                {h.horas}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="overflow-hidden rounded-2xl shadow-lg">
+      <iframe
+        src="https://maps.google.com/maps?q=37.288987,-3.575520&z=15&output=embed"
+        title="Ubicación de Residencia Canina Euromil en Cogollos de la Vega"
+        class="h-80 w-full border-0 md:h-full"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+  </div>
+</section>

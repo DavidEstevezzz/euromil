@@ -1,0 +1,63 @@
+---
+const servicios = [
+  {
+    icono: '🏡',
+    titulo: 'Estancia canina',
+    desc: 'Residencia por días: vacaciones, puentes o fines de semana. Tu perro con su rutina de paseos, comida y descanso en el campo.',
+    detalle: 'Estancias desde 1 noche',
+  },
+  {
+    icono: '🐕',
+    titulo: 'Pensión para perros',
+    desc: 'Estancias largas con seguimiento personalizado. Ideal para mudanzas, viajes de trabajo o temporadas fuera.',
+    detalle: 'Descuentos por larga estancia',
+  },
+  {
+    icono: '🌙',
+    titulo: 'Hotel 24h · Guardería',
+    desc: 'Atención continua día y noche. También guardería por horas o días sueltos si solo necesitas cubrir una jornada.',
+    detalle: 'Supervisión las 24 horas',
+  },
+];
+---
+<section id="servicios" class="bg-salvia/10 py-20 md:py-28">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="mb-2 text-sm font-semibold uppercase tracking-widest text-terracota">Servicios</p>
+      <h2 class="font-display text-3xl font-bold md:text-4xl">
+        Lo que necesites, el tiempo que lo necesites
+      </h2>
+      <p class="mt-4 text-carbon/70">
+        Cada perro y cada familia son distintos. Cuéntanos tu caso y te decimos
+        qué opción encaja mejor — la tarifa depende de la duración y el tamaño.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+  {servicios.map((s) => (
+    <article class="flex flex-col rounded-2xl bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+      <span class="text-4xl" aria-hidden="true">{s.icono}</span>
+
+      <h3 class="mt-4 font-display text-xl font-bold">
+        {s.titulo}
+      </h3>
+
+      <p class="mt-3 flex-1 text-sm text-carbon/70">
+        {s.desc}
+      </p>
+
+      <p class="mt-4 text-sm font-medium text-salvia">
+        {s.detalle}
+      </p>
+
+      <a
+        href="#reservar"
+        class="mt-5 rounded-full border-2 border-terracota px-5 py-2 text-center text-sm font-semibold text-terracota transition hover:bg-terracota hover:text-crema"
+      >
+        Consultar tarifas
+      </a>
+    </article>
+  ))}
+</div>
+  </div>
+</section>
