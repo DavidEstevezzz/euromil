@@ -1,11 +1,29 @@
 ---
-import Escena from './Escena.astro';
-// Para fotos reales: sustituye cada <Escena/> por <img src="/images/galeria-1.jpg" .../>
 const galeria = [
-  { tipo: 'exterior', etiqueta: 'Zona exterior' },
-  { tipo: 'descanso', etiqueta: 'Descanso' },
-  { tipo: 'juego',    etiqueta: 'Ratos de juego' },
-  { tipo: 'interior', etiqueta: 'Su rincón' },
+  {
+    src: '/images/euromil-patio-piscina.webp',
+    etiqueta: 'Patio exterior',
+    alt: 'Patio exterior de la residencia con piscina y vistas a la sierra',
+    class: 'col-span-2 aspect-[16/9]',
+  },
+  {
+    src: '/images/euromil-alojamientos.webp',
+    etiqueta: 'Alojamientos',
+    alt: 'Zona de alojamientos individuales para perros en Euromil',
+    class: 'aspect-[4/3]',
+  },
+  {
+    src: '/images/euromil-patio-noche.webp',
+    etiqueta: 'Iluminación nocturna',
+    alt: 'Patio de la residencia iluminado por la noche',
+    class: 'aspect-[4/3]',
+  },
+  {
+    src: '/images/euromil-panoramica-instalaciones.webp',
+    etiqueta: 'Vista general',
+    alt: 'Vista panorámica de las instalaciones exteriores de Euromil',
+    class: 'col-span-2 aspect-[16/5]',
+  },
 ] as const;
 ---
 <section id="nosotros" class="mx-auto max-w-6xl px-4 py-20 md:py-28">
@@ -19,7 +37,7 @@ const galeria = [
       <p class="mt-5 leading-relaxed text-carbon/75">
         Euromil está en el Camino de La Atalaya, en Cogollos de la Vega: campo,
         silencio y aire de sierra a un cuarto de hora de Granada. Aquí los perros
-        no pasan el día encerrados en un box de un polígono industrial — tienen
+        no pasan el día encerrados en un box de un polígono industrial; tienen
         espacio, rutina de paseos y compañía.
       </p>
 
@@ -36,7 +54,6 @@ const galeria = [
         ))}
       </ul>
 
-      <!-- Nota personal de Andrés -->
       <figure class="mt-8 rounded-2xl border-l-4 border-ocre bg-hueso/70 p-5">
         <blockquote class="font-display text-lg italic leading-snug text-carbon/85">
           «Conozco el carácter, las manías y la comida de cada huésped. Si te
@@ -44,7 +61,7 @@ const galeria = [
           la estancia.»
         </blockquote>
         <figcaption class="mt-3 flex items-center gap-3">
-          <span class="grid h-10 w-10 place-items-center rounded-full bg-terracota text-crema" aria-hidden="true">🧑‍🌾</span>
+          <span class="grid h-10 w-10 place-items-center rounded-full bg-terracota text-crema" aria-hidden="true">A</span>
           <span>
             <span class="block font-display text-base font-semibold not-italic text-carbon">Andrés</span>
             <span class="block text-xs text-carbon/55">al frente de la residencia</span>
@@ -55,11 +72,17 @@ const galeria = [
 
     <div class="grid grid-cols-2 gap-3 md:gap-4">
       {galeria.map((foto, i) => (
-        <Escena
-          tipo={foto.tipo}
-          etiqueta={foto.etiqueta}
-          class={`aspect-[4/3] w-full rounded-2xl shadow-suave ring-1 ring-carbon/5 ${i % 2 === 1 ? 'mt-6' : ''}`}
-        />
+        <figure class={`relative overflow-hidden rounded-2xl shadow-suave ring-1 ring-carbon/5 ${foto.class}`}>
+          <img
+            src={foto.src}
+            alt={foto.alt}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            class="h-full w-full object-cover"
+          />
+          <figcaption class="absolute bottom-3 left-3 rounded-full bg-hueso/85 px-3 py-1 text-xs font-semibold text-carbon backdrop-blur">
+            {foto.etiqueta}
+          </figcaption>
+        </figure>
       ))}
     </div>
   </div>
