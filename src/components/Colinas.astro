@@ -1,12 +1,20 @@
 ---
 interface Props {
-  color?: string; // clase de fill de Tailwind
   flip?: boolean;
+  variante?: 'salvia' | 'arena';
 }
-const { color = 'fill-salvia/10', flip = false } = Astro.props;
+const { flip = false, variante = 'salvia' } = Astro.props;
+
+const paletas = {
+  salvia: ['fill-salvia/20', 'fill-salvia/35', 'fill-salvia/60'],
+  arena:  ['fill-ocre/15', 'fill-arena', 'fill-terracota/25'],
+} as const;
+const capas = paletas[variante];
 ---
-<div class={`w-full overflow-hidden leading-none ${flip ? 'rotate-180' : ''}`} aria-hidden="true">
-  <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class={`h-12 w-full md:h-20 ${color}`}>
-    <path d="M0,60 C240,10 420,95 720,55 C1020,15 1200,80 1440,40 L1440,90 L0,90 Z" />
+<div class={`relative -mb-px w-full overflow-hidden leading-none ${flip ? 'rotate-180' : ''}`} aria-hidden="true">
+  <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="h-16 w-full md:h-24">
+    <path d="M0,70 C240,30 420,95 720,60 C1020,25 1200,85 1440,50 L1440,120 L0,120 Z" class={capas[0]} />
+    <path d="M0,85 C260,55 460,105 760,78 C1040,52 1240,98 1440,72 L1440,120 L0,120 Z" class={capas[1]} />
+    <path d="M0,100 C280,80 520,115 820,96 C1080,80 1260,108 1440,92 L1440,120 L0,120 Z" class={capas[2]} />
   </svg>
 </div>

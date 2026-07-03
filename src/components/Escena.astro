@@ -1,0 +1,202 @@
+---
+/*
+  Ilustraciones propias (SVG) con la paleta de la marca.
+  Sirven de imagen provisional cálida y coherente mientras no haya
+  fotos reales. Para usar fotos: sustituye <Escena/> por una <img/>
+  con la foto guardada en public/images/.
+*/
+interface Props {
+  tipo?: 'pradera' | 'exterior' | 'descanso' | 'juego' | 'interior';
+  class?: string;
+  etiqueta?: string;
+}
+const { tipo = 'pradera', class: clase = '', etiqueta } = Astro.props;
+
+const cielo: Record<string, [string, string]> = {
+  pradera:  ['#fbead0', '#f6dcbf'],
+  exterior: ['#f9e7cd', '#f3d9bd'],
+  descanso: ['#f7dcc2', '#eec6a6'],
+  juego:    ['#fbeacf', '#f5dcc0'],
+  interior: ['#fff6e7', '#f3e2c6'],
+};
+const [c1, c2] = cielo[tipo] ?? cielo.pradera;
+const uid = Math.random().toString(36).slice(2, 8);
+---
+<figure class={`relative overflow-hidden ${clase}`}>
+  <svg
+    viewBox="0 0 800 600"
+    preserveAspectRatio="xMidYMid slice"
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-full w-full"
+    role="img"
+    aria-label={etiqueta ?? 'Ilustración de la residencia canina Euromil'}
+  >
+    <defs>
+      <linearGradient id={`cielo-${uid}`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color={c1} />
+        <stop offset="1" stop-color={c2} />
+      </linearGradient>
+      <radialGradient id={`sol-${uid}`} cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#f6c85a" />
+        <stop offset="1" stop-color="#dda23c" />
+      </radialGradient>
+    </defs>
+
+    <rect width="800" height="600" fill={`url(#cielo-${uid})`} />
+
+    {tipo !== 'interior' && (
+      <g>
+        {/* Sol */}
+        <circle cx={tipo === 'descanso' ? 620 : 172} cy="150" r="118" fill="#f2be55" opacity="0.28" />
+        <circle cx={tipo === 'descanso' ? 620 : 172} cy="150" r="66" fill={`url(#sol-${uid})`} />
+
+        {/* Aves */}
+        <path d="M300 120 q14 -12 28 0 q14 -12 28 0" fill="none" stroke="#3a2c22" stroke-width="4" stroke-linecap="round" opacity="0.55" />
+        <path d="M360 148 q10 -9 20 0 q10 -9 20 0" fill="none" stroke="#3a2c22" stroke-width="3.5" stroke-linecap="round" opacity="0.45" />
+
+        {/* Colinas */}
+        <path d="M0 430 C160 360 300 470 480 420 C620 384 720 430 800 405 L800 600 L0 600 Z" fill="#8b9968" />
+        <path d="M0 480 C180 430 320 520 520 470 C660 436 740 486 800 470 L800 600 L0 600 Z" fill="#6d7a4c" />
+        <path d="M0 545 C220 505 360 560 560 528 C680 510 740 540 800 532 L800 600 L0 600 Z" fill="#515c39" />
+      </g>
+    )}
+
+    {/* --- Foregrounds por tipo --- */}
+
+    {tipo === 'pradera' && (
+      <g>
+        {/* sendero de huellas */}
+        {[560, 500, 452, 416].map((x, i) => (
+          <g fill="#c2842a" opacity={0.5 - i * 0.06} transform={`translate(${x} ${560 - i * 26}) scale(${1 - i * 0.12})`}>
+            <circle cx="0" cy="0" r="7" />
+            <circle cx="-11" cy="-9" r="3.4" />
+            <circle cx="-2" cy="-13" r="3.4" />
+            <circle cx="8" cy="-12" r="3.4" />
+          </g>
+        ))}
+        {/* Perro sentado */}
+        <g transform="translate(300 470)" fill="#3a2c22">
+          <path d="M-34 60 q-18 -70 30 -78 q52 -8 58 46 q4 34 -6 66 q-42 12 -82 0 z" />
+          <circle cx="46" cy="-30" r="30" />
+          <path d="M64 -34 q26 -2 30 16 q-16 8 -34 2 z" />
+          <path d="M28 -54 q-6 -22 12 -24 q6 12 2 30 z" />
+          <path d="M-40 8 q-22 -8 -20 -34 q14 10 30 22 z" />
+          <circle cx="58" cy="-38" r="3.6" fill="#f5ecdb" />
+        </g>
+      </g>
+    )}
+
+    {tipo === 'exterior' && (
+      <g>
+        {/* Valla de madera */}
+        <g fill="#c2842a">
+          <rect x="70" y="410" width="600" height="12" rx="4" />
+          {[110, 230, 350, 470, 590].map((x) => (
+            <rect x={x} y="386" width="18" height="80" rx="5" />
+          ))}
+        </g>
+        {/* Árbol */}
+        <g>
+          <rect x="686" y="360" width="18" height="120" rx="6" fill="#8a5a34" />
+          <circle cx="695" cy="345" r="54" fill="#6d7a4c" />
+          <circle cx="662" cy="360" r="36" fill="#8b9968" />
+          <circle cx="726" cy="362" r="34" fill="#515c39" />
+        </g>
+        {/* Perro trotando */}
+        <g transform="translate(300 500)" fill="#3a2c22">
+          <ellipse cx="0" cy="0" rx="60" ry="34" />
+          <circle cx="58" cy="-24" r="26" />
+          <path d="M76 -26 q24 0 30 16 q-18 8 -34 2 z" />
+          <path d="M44 -46 q-4 -20 14 -22 q4 12 -2 28 z" />
+          <path d="M-56 -14 q-22 -14 -16 -38 q12 14 24 30 z" />
+          <rect x="-34" y="24" width="12" height="40" rx="6" />
+          <rect x="24" y="24" width="12" height="40" rx="6" />
+          <circle cx="70" cy="-30" r="3.6" fill="#f5ecdb" />
+        </g>
+      </g>
+    )}
+
+    {tipo === 'descanso' && (
+      <g>
+        {/* Caseta */}
+        <g transform="translate(120 360)">
+          <rect x="0" y="60" width="150" height="110" rx="10" fill="#bd5f39" />
+          <path d="M-16 64 L75 -6 L166 64 Z" fill="#9c4a2a" />
+          <ellipse cx="75" cy="150" rx="42" ry="46" fill="#3a2c22" />
+        </g>
+        {/* Perro tumbado */}
+        <g transform="translate(470 520)" fill="#3a2c22">
+          <path d="M-92 24 q-6 -34 40 -38 q60 -6 116 4 q30 6 24 30 q-90 22 -180 4 z" />
+          <circle cx="118" cy="4" r="28" />
+          <path d="M136 0 q26 -2 30 16 q-18 8 -34 2 z" />
+          <path d="M100 -18 q-6 -22 12 -24 q6 12 2 30 z" />
+          <circle cx="130" cy="-2" r="3.6" fill="#f5ecdb" />
+        </g>
+      </g>
+    )}
+
+    {tipo === 'juego' && (
+      <g>
+        {/* Pelota */}
+        <circle cx="150" cy="520" r="30" fill="#dda23c" />
+        <path d="M124 512 q26 -14 52 0" fill="none" stroke="#c2842a" stroke-width="4" />
+        {/* Perro 1 (jugando, inclinado) */}
+        <g transform="translate(300 500)" fill="#3a2c22">
+          <ellipse cx="0" cy="0" rx="54" ry="30" />
+          <circle cx="52" cy="6" r="24" />
+          <path d="M68 8 q22 6 24 24 q-20 4 -32 -6 z" />
+          <path d="M40 -14 q-6 -20 12 -22 q4 12 -2 28 z" />
+          <path d="M-52 -18 q-20 -18 -10 -40 q10 16 20 34 z" />
+          <rect x="-30" y="20" width="11" height="40" rx="5" />
+          <rect x="22" y="26" width="11" height="34" rx="5" />
+        </g>
+        {/* Perro 2 (sentado, terracota) */}
+        <g transform="translate(560 500)" fill="#9c4a2a">
+          <path d="M-30 54 q-16 -62 26 -70 q46 -8 52 40 q4 30 -6 58 q-38 10 -72 0 z" />
+          <circle cx="42" cy="-26" r="26" />
+          <path d="M58 -30 q22 -2 26 14 q-14 8 -30 2 z" />
+          <path d="M26 -48 q-6 -18 10 -20 q6 10 2 26 z" />
+        </g>
+      </g>
+    )}
+
+    {tipo === 'interior' && (
+      <g>
+        {/* Suelo cálido */}
+        <rect x="0" y="430" width="800" height="170" fill="#e4cfa8" />
+        <rect x="0" y="418" width="800" height="16" fill="#d3b984" />
+        {/* Ventana con vistas al campo */}
+        <g>
+          <rect x="500" y="120" width="230" height="180" rx="12" fill="#bd5f39" />
+          <rect x="514" y="134" width="202" height="152" rx="6" fill="#cfe0e6" />
+          <path d="M514 250 q60 -34 110 -14 q40 16 92 0 L716 286 L514 286 Z" fill="#8b9968" />
+          <circle cx="560" cy="176" r="22" fill="#f2be55" />
+          <rect x="608" y="134" width="14" height="152" fill="#bd5f39" />
+        </g>
+        {/* Cama del perro */}
+        <ellipse cx="250" cy="470" rx="150" ry="46" fill="#9c4a2a" />
+        <ellipse cx="250" cy="462" rx="120" ry="34" fill="#bd5f39" />
+        {/* Perro acurrucado durmiendo */}
+        <g transform="translate(250 452)" fill="#3a2c22">
+          <ellipse cx="0" cy="0" rx="96" ry="40" />
+          <circle cx="66" cy="-6" r="30" />
+          <path d="M84 -12 q24 0 30 16 q-18 8 -34 2 z" />
+          <path d="M48 -30 q-4 -18 14 -20 q4 12 -2 26 z" />
+          <path d="M52 -6 q6 6 16 4" stroke="#f5ecdb" stroke-width="2.5" fill="none" stroke-linecap="round" />
+          <path d="M-70 -8 q-18 6 -30 -2" stroke="#8b9968" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.5" />
+        </g>
+        {/* Cuenco */}
+        <g transform="translate(600 470)">
+          <path d="M-30 0 q30 26 60 0 z" fill="#6d7a4c" />
+          <ellipse cx="0" cy="0" rx="30" ry="8" fill="#515c39" />
+        </g>
+      </g>
+    )}
+  </svg>
+
+  {etiqueta && (
+    <figcaption class="absolute bottom-3 left-3 rounded-full bg-hueso/85 px-3 py-1 text-xs font-semibold text-carbon backdrop-blur">
+      {etiqueta}
+    </figcaption>
+  )}
+</figure>

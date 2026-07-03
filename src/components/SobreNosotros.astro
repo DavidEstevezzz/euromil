@@ -1,48 +1,64 @@
 ---
-// Sustituir por fotos reales de la ficha de Google Business:
-// guardarlas en public/images/ y cambiar los src por /images/galeria-1.jpg, etc.
+import Escena from './Escena.astro';
+// Para fotos reales: sustituye cada <Escena/> por <img src="/images/galeria-1.jpg" .../>
 const galeria = [
-  { src: 'https://placedog.net/600/450?id=213', alt: 'Zona exterior de la residencia' },
-  { src: 'https://placedog.net/600/450?id=167', alt: 'Perro descansando en las instalaciones' },
-  { src: 'https://placedog.net/600/450?id=94',  alt: 'Perros jugando al aire libre' },
-  { src: 'https://placedog.net/600/450?id=188', alt: 'Interior limpio y amplio de los alojamientos' },
-];
+  { tipo: 'exterior', etiqueta: 'Zona exterior' },
+  { tipo: 'descanso', etiqueta: 'Descanso' },
+  { tipo: 'juego',    etiqueta: 'Ratos de juego' },
+  { tipo: 'interior', etiqueta: 'Su rincón' },
+] as const;
 ---
 <section id="nosotros" class="mx-auto max-w-6xl px-4 py-20 md:py-28">
   <div class="grid items-center gap-12 md:grid-cols-2">
     <div>
-      <p class="mb-2 text-sm font-semibold uppercase tracking-widest text-terracota">
-        La residencia
-      </p>
-      <h2 class="font-display text-3xl font-bold md:text-4xl">
-        Un sitio donde tu perro está a gusto de verdad
+      <p class="antetitulo">La residencia</p>
+      <h2 class="mt-3 font-display text-3xl font-semibold md:text-[2.6rem] md:leading-tight">
+        Un sitio donde tu perro está{' '}
+        <span class="text-terracota">a gusto de verdad</span>
       </h2>
-      <p class="mt-5 text-carbon/75">
+      <p class="mt-5 leading-relaxed text-carbon/75">
         Euromil está en el Camino de La Atalaya, en Cogollos de la Vega: campo,
         silencio y aire de sierra a un cuarto de hora de Granada. Aquí los perros
         no pasan el día encerrados en un box de un polígono industrial — tienen
         espacio, rutina de paseos y compañía.
       </p>
-      <p class="mt-4 text-carbon/75">
-        Andrés lleva la residencia personalmente. Conoce el carácter, las manías
-        y la comida de cada huésped, y si te quedas más tranquilo, te va contando
-        cómo lo lleva tu perro durante la estancia. Las instalaciones se limpian
-        a diario y cada perro tiene su zona amplia de descanso.
-      </p>
-      <ul class="mt-6 space-y-3 text-carbon/80">
-        <li class="flex gap-3"><span class="text-salvia">✔</span> Entorno rural tranquilo, sin ruido de tráfico</li>
-        <li class="flex gap-3"><span class="text-salvia">✔</span> Instalaciones limpias y amplias, higiene diaria</li>
-        <li class="flex gap-3"><span class="text-salvia">✔</span> Trato directo con Andrés, sin intermediarios</li>
+
+      <ul class="mt-7 space-y-3.5 text-carbon/80">
+        {[
+          'Entorno rural tranquilo, sin ruido de tráfico',
+          'Instalaciones limpias y amplias, higiene diaria',
+          'Trato directo con Andrés, sin intermediarios',
+        ].map((t) => (
+          <li class="flex items-start gap-3">
+            <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-salvia/15 text-sm text-salvia-oscuro">✓</span>
+            {t}
+          </li>
+        ))}
       </ul>
+
+      <!-- Nota personal de Andrés -->
+      <figure class="mt-8 rounded-2xl border-l-4 border-ocre bg-hueso/70 p-5">
+        <blockquote class="font-display text-lg italic leading-snug text-carbon/85">
+          «Conozco el carácter, las manías y la comida de cada huésped. Si te
+          quedas más tranquilo, te voy contando cómo lo lleva tu perro durante
+          la estancia.»
+        </blockquote>
+        <figcaption class="mt-3 flex items-center gap-3">
+          <span class="grid h-10 w-10 place-items-center rounded-full bg-terracota text-crema" aria-hidden="true">🧑‍🌾</span>
+          <span>
+            <span class="block font-display text-base font-semibold not-italic text-carbon">Andrés</span>
+            <span class="block text-xs text-carbon/55">al frente de la residencia</span>
+          </span>
+        </figcaption>
+      </figure>
     </div>
 
     <div class="grid grid-cols-2 gap-3 md:gap-4">
       {galeria.map((foto, i) => (
-        <img
-          src={foto.src}
-          alt={foto.alt}
-          loading="lazy"
-          class={`aspect-[4/3] w-full rounded-2xl object-cover shadow-md ${i % 2 === 1 ? 'mt-6' : ''}`}
+        <Escena
+          tipo={foto.tipo}
+          etiqueta={foto.etiqueta}
+          class={`aspect-[4/3] w-full rounded-2xl shadow-suave ring-1 ring-carbon/5 ${i % 2 === 1 ? 'mt-6' : ''}`}
         />
       ))}
     </div>

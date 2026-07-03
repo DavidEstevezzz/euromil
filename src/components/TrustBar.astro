@@ -1,19 +1,18 @@
-<section class="relative z-10 -mt-10 px-4">
-  <div class="mx-auto grid max-w-4xl gap-6 rounded-2xl bg-white p-6 shadow-lg sm:grid-cols-3 sm:gap-4 md:p-8">
-    <div class="text-center">
-      <p class="text-2xl tracking-wide text-ocre" aria-hidden="true">★★★★★</p>
-      <p class="mt-1 font-display text-xl font-bold">5,0 en Google</p>
-      <p class="text-sm text-carbon/60">cerca de 90 reseñas</p>
-    </div>
-    <div class="text-center">
-      <p class="text-2xl" aria-hidden="true">🌿</p>
-      <p class="mt-1 font-display text-xl font-bold">Entorno rural</p>
-      <p class="text-sm text-carbon/60">tranquilidad y aire libre, sin ruido de ciudad</p>
-    </div>
-    <div class="text-center">
-      <p class="text-2xl" aria-hidden="true">🤝</p>
-      <p class="mt-1 font-display text-xl font-bold">Trato personal</p>
-      <p class="text-sm text-carbon/60">Andrés te cuenta cómo va tu perro cada día</p>
-    </div>
+---
+const items = [
+  { icono: '★★★★★', titulo: '5,0 en Google', desc: 'cerca de 90 reseñas', estrellas: true },
+  { icono: '🌿', titulo: 'Entorno rural', desc: 'tranquilidad y aire libre, sin ruido de ciudad' },
+  { icono: '🤝', titulo: 'Trato personal', desc: 'Andrés te cuenta cómo va tu perro cada día' },
+];
+---
+<section class="relative z-10 -mt-12 px-4">
+  <div class="tarjeta mx-auto grid max-w-4xl gap-2 p-6 shadow-flotante sm:grid-cols-3 md:p-8">
+    {items.map((it, i) => (
+      <div class={`text-center ${i === 1 ? 'sm:border-x sm:border-carbon/10' : ''} px-2`}>
+        <p class={`text-2xl tracking-wide ${it.estrellas ? 'text-ocre' : ''}`} aria-hidden="true">{it.icono}</p>
+        <p class="mt-1.5 font-display text-xl font-semibold">{it.titulo}</p>
+        <p class="mt-0.5 text-sm text-carbon/60">{it.desc}</p>
+      </div>
+    ))}
   </div>
 </section>

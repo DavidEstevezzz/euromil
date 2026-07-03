@@ -8,10 +8,11 @@ const enlaces = [
   { href: '/consulta', texto: 'Mi reserva' },
 ];
 ---
-<header class="sticky top-0 z-50 bg-crema/90 backdrop-blur border-b border-carbon/10">
+<header class="sticky top-0 z-50 border-b border-carbon/8 bg-crema/85 backdrop-blur-md">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-    <a href="/#top" class="font-display text-xl font-bold text-terracota">
-      🐾 Euromil
+    <a href="/#top" class="flex items-center gap-2 font-display text-xl font-semibold text-terracota">
+      <span class="grid h-9 w-9 place-items-center rounded-full bg-terracota text-base text-crema">🐾</span>
+      Euromil
     </a>
 
     <nav class="hidden items-center gap-6 md:flex">
@@ -26,7 +27,7 @@ const enlaces = [
 
   <a
     href="/#reservar"
-    class="rounded-full bg-ocre px-5 py-2 text-sm font-semibold text-carbon shadow-sm transition hover:brightness-105"
+    class="rounded-full bg-ocre px-5 py-2 text-sm font-semibold text-carbon shadow-suave transition hover:-translate-y-0.5 hover:brightness-105"
   >
     Reservar
   </a>

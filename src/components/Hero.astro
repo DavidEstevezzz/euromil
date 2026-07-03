@@ -1,32 +1,39 @@
 ---
-// Placeholder: placedog.net sirve fotos reales de perros para la demo.
-// Sustituir por fotos reales de las instalaciones cuando el cliente las pase.
-const fotoHero = 'https://placedog.net/900/1000?id=115';
+import Escena from './Escena.astro';
+// Cuando haya foto real: cambia <Escena/> por
+// <img src="/images/hero.jpg" ... class="relative rounded-blob object-cover shadow-flotante aspect-[4/5] w-full" />
 ---
 <section id="top" class="relative overflow-hidden">
-  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-20 pt-12 md:grid-cols-2 md:pb-28 md:pt-20">
+  <!-- Formas orgánicas de fondo -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute -left-24 top-10 h-72 w-72 rounded-full bg-salvia/15 blur-3xl"></div>
+    <div class="absolute right-0 top-40 h-80 w-80 rounded-full bg-ocre/15 blur-3xl"></div>
+  </div>
+
+  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-24 pt-14 md:grid-cols-2 md:pb-32 md:pt-24">
     <div>
-      <p class="mb-3 inline-block rounded-full bg-salvia/15 px-4 py-1 text-sm font-medium text-salvia">
-        Cogollos de la Vega · a 15 min de Granada
+      <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-salvia/25 bg-salvia/10 px-4 py-1.5 text-sm font-medium text-salvia-oscuro">
+        <span class="text-base">📍</span> Cogollos de la Vega · a 15 min de Granada
       </p>
-      <h1 class="font-display text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
-        Tu perro, de vacaciones <span class="text-terracota">en el campo</span>
+      <h1 class="font-display text-[2.6rem] font-semibold leading-[1.05] md:text-6xl">
+        Tu perro, de vacaciones{' '}
+        <span class="subrayado text-terracota italic">en el campo</span>
       </h1>
-      <p class="mt-5 max-w-md text-lg text-carbon/75">
+      <p class="mt-6 max-w-md text-lg leading-relaxed text-carbon/75">
         Nada de jaulas en un polígono. En Euromil tu perro pasa los días en un
         entorno rural tranquilo, con espacio para correr y el trato cercano de
         Andrés, que conoce a cada huésped por su nombre.
       </p>
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
         <a
           href="#reservar"
-          class="rounded-full bg-ocre px-7 py-3.5 text-center font-semibold text-carbon shadow-md transition hover:brightness-105"
+          class="rounded-full bg-ocre px-7 py-3.5 text-center font-semibold text-carbon shadow-calida transition hover:-translate-y-0.5 hover:brightness-105"
         >
           Reserva la estancia de tu perro
         </a>
         <a
           href="tel:697681869"
-          class="rounded-full border-2 border-terracota px-7 py-3 text-center font-semibold text-terracota transition hover:bg-terracota hover:text-crema"
+          class="rounded-full border-2 border-terracota/70 px-7 py-3 text-center font-semibold text-terracota transition hover:bg-terracota hover:text-crema"
         >
           📞 697 68 18 69
         </a>
@@ -34,13 +41,19 @@ const fotoHero = 'https://placedog.net/900/1000?id=115';
     </div>
 
     <div class="relative mx-auto w-full max-w-sm md:max-w-none">
-      <div class="absolute -inset-4 rounded-blob bg-salvia/20"></div>
-      <img
-        src={fotoHero}
-        alt="Perro feliz corriendo en el campo en la Residencia Canina Euromil"
-        class="relative rounded-blob object-cover shadow-xl aspect-[4/5] w-full"
-        loading="eager"
+      <div class="absolute -inset-5 rounded-blob bg-terracota/10"></div>
+      <div class="absolute -right-4 -top-4 h-20 w-20 rounded-blob2 bg-ocre/25"></div>
+      <Escena
+        tipo="pradera"
+        etiqueta="Cogollos de la Vega"
+        class="relative aspect-[4/5] w-full rounded-blob shadow-flotante ring-1 ring-carbon/5"
       />
+      <!-- Sello de reseñas -->
+      <div class="absolute -bottom-5 -left-4 rounded-2xl bg-hueso px-4 py-3 shadow-suave sm:-left-8">
+        <p class="text-sm leading-none text-ocre" aria-hidden="true">★★★★★</p>
+        <p class="mt-1 text-xs font-semibold text-carbon">5,0 en Google</p>
+        <p class="text-[11px] text-carbon/55">~90 familias</p>
+      </div>
     </div>
   </div>
 </section>
