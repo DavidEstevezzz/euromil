@@ -26,9 +26,9 @@ const galeria = [
   },
 ] as const;
 ---
-<section id="nosotros" class="mx-auto max-w-6xl px-4 py-20 md:py-28">
-  <div class="grid items-center gap-12 md:grid-cols-2">
-    <div>
+<section id="nosotros" class="mx-auto max-w-6xl px-4 py-16 md:py-28">
+  <div class="grid items-center gap-10 md:grid-cols-2 md:gap-12">
+    <div class="revelar">
       <p class="antetitulo">La residencia</p>
       <h2 class="mt-3 font-display text-3xl font-semibold md:text-[2.6rem] md:leading-tight">
         Un sitio donde tu perro está{' '}
@@ -70,7 +70,7 @@ const galeria = [
       </figure>
     </div>
 
-    <div class="grid grid-cols-2 gap-3 md:gap-4">
+    <div class="revelar grid grid-cols-2 gap-3 md:gap-4">
       {galeria.map((foto, i) => (
         <figure class={`relative overflow-hidden rounded-2xl shadow-suave ring-1 ring-carbon/5 ${foto.class}`}>
           <img

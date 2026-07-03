@@ -5,9 +5,9 @@ const servicios = [
   { valor: 'guarderia', texto: 'Hotel 24h / Guardería' },
 ];
 const claseInput =
-  'w-full rounded-xl border border-carbon/15 bg-crema px-4 py-2.5 text-sm outline-none transition focus:border-terracota focus:ring-2 focus:ring-terracota/30';
+  'w-full rounded-xl border border-carbon/15 bg-crema px-4 py-3 text-base outline-none transition focus:border-terracota focus:ring-2 focus:ring-terracota/30 sm:py-2.5 sm:text-sm';
 ---
-<section id="reservar" class="relative overflow-hidden bg-terracota py-20 text-crema md:py-28">
+<section id="reservar" class="relative overflow-hidden bg-terracota py-16 text-crema md:py-28">
   <!-- Textura orgánica de fondo -->
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-0 opacity-[0.12]">
     <div class="absolute -left-16 -top-16 h-72 w-72 rounded-full bg-crema blur-2xl"></div>
@@ -108,7 +108,7 @@ const claseInput =
       <button
         type="submit"
         id="btn-enviar"
-        class="w-full rounded-full bg-ocre px-7 py-4 font-semibold text-carbon shadow-md transition hover:brightness-105 disabled:opacity-60"
+        class="toca w-full rounded-full bg-ocre px-7 py-4 font-semibold text-carbon shadow-md transition hover:brightness-105 disabled:opacity-60"
       >
         Enviar solicitud de reserva
       </button>

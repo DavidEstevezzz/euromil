@@ -1,0 +1,44 @@
+---
+// Barra de acción fija — solo visible en móvil.
+// Da acceso permanente a las dos acciones clave: reservar y llamar.
+---
+<div
+  id="barra-movil"
+  class="barra-accion fixed inset-x-0 bottom-0 z-30 border-t border-carbon/10 bg-crema/95 px-3 pt-2.5 backdrop-blur-md transition-transform duration-300 md:hidden"
+>
+  <div class="mx-auto flex max-w-md items-stretch gap-2.5">
+    <a
+      href="/#reservar"
+      class="toca flex flex-[1.4] items-center justify-center gap-2 rounded-full bg-ocre px-4 py-3 text-sm font-semibold text-carbon shadow-calida"
+    >
+      🐾 Reservar
+    </a>
+    <a
+      href="tel:697681869"
+      aria-label="Llamar al 697 68 18 69"
+      class="toca flex flex-1 items-center justify-center gap-2 rounded-full border-2 border-terracota/70 bg-hueso px-4 py-3 text-sm font-semibold text-terracota"
+    >
+      📞 Llamar
+    </a>
+  </div>
+</div>
+<script>
+  // Oculta la barra mientras el usuario está sobre el propio formulario de
+  // reserva (evita duplicar el CTA) y la vuelve a mostrar al salir.
+  const barra = document.getElementById('barra-movil');
+  const reservar = document.getElementById('reservar');
+
+  if (barra && reservar && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((e) => {
+          barra.style.transform = e.isIntersecting
+            ? 'translateY(130%)'
+            : 'translateY(0)';
+        });
+      },
+      { threshold: 0.18 }
+    );
+    io.observe(reservar);
+  }
+</script>
