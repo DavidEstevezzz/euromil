@@ -217,6 +217,7 @@ const claseInput =
               ${r.email ? ` · <span class="text-carbon/60">${r.email}</span>` : ''}
             </p>
             ${!r.vacunas ? '<p class="mt-2 inline-block rounded-lg bg-terracota/10 px-2 py-1 text-xs font-semibold text-terracota">⚠ Cartilla de vacunas sin confirmar</p>' : ''}
+            ${r.cliente_token ? `<p class="mt-2 text-xs font-semibold uppercase tracking-wide text-carbon/45">Codigo cliente: <span class="text-terracota">${r.cliente_token}</span></p>` : ''}
           </div>
           <div class="flex flex-col items-end gap-2">
             <span class="rounded-full px-3 py-1 text-xs font-semibold ${badgeEstado[r.estado]}">${r.estado}</span>
