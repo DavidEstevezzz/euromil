@@ -25,8 +25,8 @@ const testimonios = [
 ];
 const inicial = (n: string) => n.trim().charAt(0);
 ---
-<section id="opiniones" class="mx-auto max-w-6xl px-4 py-20 md:py-28">
-  <div class="mx-auto max-w-2xl text-center">
+<section id="opiniones" class="mx-auto max-w-6xl px-4 py-16 md:py-28">
+  <div class="revelar mx-auto max-w-2xl text-center">
     <p class="antetitulo justify-center">Opiniones</p>
     <h2 class="mt-3 font-display text-3xl font-semibold md:text-[2.6rem] md:leading-tight">
       Lo que cuentan las familias que ya nos conocen
@@ -36,9 +36,9 @@ const inicial = (n: string) => n.trim().charAt(0);
     </p>
   </div>
 
-  <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="mt-10 grid gap-5 sm:mt-14 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
     {testimonios.map((t) => (
-      <figure class="tarjeta relative flex flex-col p-6">
+      <figure class="tarjeta revelar relative flex flex-col p-6">
         <span class="pointer-events-none absolute right-5 top-2 font-display text-6xl leading-none text-ocre/25" aria-hidden="true">”</span>
         <p class="text-ocre" aria-label="5 estrellas">★★★★★</p>
         <blockquote class="mt-3 flex-1 text-sm leading-relaxed text-carbon/80">

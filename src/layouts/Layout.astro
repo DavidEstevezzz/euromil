@@ -26,5 +26,27 @@ const {
   </head>
   <body class="bg-crema text-carbon font-body antialiased">
     <slot />
+    <script>
+      // Aparición suave de los elementos marcados con .revelar al entrar en pantalla
+      const reducir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const objetivos = document.querySelectorAll('.revelar');
+
+      if (reducir || !('IntersectionObserver' in window)) {
+        objetivos.forEach((el) => el.classList.add('es-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entradas, obs) => {
+            entradas.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('es-visible');
+                obs.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -12% 0px', threshold: 0.08 }
+        );
+        objetivos.forEach((el) => io.observe(el));
+      }
+    </script>
   </body>
 </html>
